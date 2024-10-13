@@ -30,6 +30,8 @@ public class VisualizarClientes {
                 System.out.println("CPF/cnpj: " + cnpj + ", Telefone: " + telefone + ", Nome: " + nome + ", Email: " + email);
                 System.out.println("Endereço: " + rua + ", " + bairro + ", " + cidade);
                 System.out.println("----------------------------");
+                
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
