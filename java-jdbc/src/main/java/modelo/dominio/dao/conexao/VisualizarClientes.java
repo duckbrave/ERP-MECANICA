@@ -19,19 +19,18 @@ public class VisualizarClientes {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                long cnpj = rs.getLong("cnpj");
-                String telefone = rs.getString("telefone"); // Use getString para evitar problemas
+                String cnpj = rs.getString("cnpj"); // Mudei para String para lidar com zeros à esquerda
+                String telefone = rs.getString("telefone");
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String rua = rs.getString("rua");
                 String bairro = rs.getString("bairro");
                 String cidade = rs.getString("cidade");
+
                 System.out.println("----------------------------");
-                System.out.println("CPF/cnpj: " + cnpj + ", Telefone: " + telefone + ", Nome: " + nome + ", Email: " + email);
+                System.out.println("CPF/CNPJ: " + cnpj + ", Telefone: " + telefone + ", Nome: " + nome + ", Email: " + email);
                 System.out.println("Endereço: " + rua + ", " + bairro + ", " + cidade);
                 System.out.println("----------------------------");
-                
-                
             }
         } catch (SQLException e) {
             e.printStackTrace();

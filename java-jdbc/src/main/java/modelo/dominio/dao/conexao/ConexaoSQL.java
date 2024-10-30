@@ -47,4 +47,10 @@ public class ConexaoSQL implements Conexao {
         }
         return connection; // Retornar a conexão atual
     }
+
+	@Override
+	public Connection getConnection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

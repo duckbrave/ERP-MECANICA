@@ -1,9 +1,11 @@
 package modelo.dominio.dao.conexao;
 
 import java.util.Scanner;
-
 import gestao.estoque.CadastroProduto;
-
+import gestao.venda.VendaNFE;
+import gestao.venda.VisualizarVendaNFE;
+import modelo.agendamento.Agendamento;
+import modelo.agendamento.VisualizarAgendamentos;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,13 +15,19 @@ public class Main {
         // Instancia os objetos de cadastro
         CadastroCliente cadastroCliente = new CadastroCliente(conexao);
         CadastroFornecedor cadastroFornecedor = new CadastroFornecedor(conexao);
-        CadastroProduto cadastroProduto = new CadastroProduto(conexao); // Nova instância para cadastro de produto
+        CadastroProduto cadastroProduto = new CadastroProduto(conexao);
 
         VisualizarClientes visualizarClientes = new VisualizarClientes(conexao);
         VisualizarFornecedores visualizarFornecedores = new VisualizarFornecedores(conexao);
+        VisualizarAgendamentos visualizarAgendamentos = new VisualizarAgendamentos(conexao);
 
-        Scanner scanner = new Scanner(System.in);
+        Agendamento agendamento = new Agendamento(conexao); // Instancia de Agendamento
+        Scanner scanner = new Scanner(System.in); // Scanner criado aqui
 
+        VendaNFE vendaNFE = new VendaNFE(conexao, scanner); // Passando o Scanner para VendaNFE
+        VisualizarVendaNFE visualizador = new VisualizarVendaNFE(conexao);
+        
+        
         while (true) {
             try {
                 // Exibe o menu principal
@@ -28,41 +36,54 @@ public class Main {
                 System.out.println("2. Cadastrar Fornecedor");
                 System.out.println("3. Visualizar Clientes");
                 System.out.println("4. Visualizar Fornecedores");
-                System.out.println("5. Cadastrar Produto"); // Nova opção para cadastrar produto
+                System.out.println("5. Cadastrar Produto");
                 System.out.println("6. Sair");
+                System.out.println("7. Cadastrar Agendamento");
+                System.out.println("8. Visualizar Agendamentos");
+                System.out.println("9. Realizar Venda NF-e"); // Novo menu para venda NF-e
+                System.out.println("10. Mostrar vendas");
                 System.out.print("Opção: ");
                 int opcao = scanner.nextInt();
                 scanner.nextLine(); // Consumir a nova linha
 
                 switch (opcao) {
                     case 1:
-                        // Chama o método para coletar dados do cliente
                         cadastroCliente.coletarDadosCliente();
                         break;
                     case 2:
-                        // Chama o método para coletar dados do fornecedor
                         cadastroFornecedor.coletarDadosFornecedor();
                         break;
                     case 3:
-                        // Chama o método para visualizar os clientes
                         visualizarClientes.listarClientes();
                         break;
                     case 4:
-                        // Chama o método para visualizar os fornecedores
                         visualizarFornecedores.listarFornecedores();
                         break;
                     case 5:
-                        // Chama o método para coletar dados do produto
                         cadastroProduto.coletarDadosProduto();
                         break;
                     case 6:
-                        // Encerra o programa
                         System.out.println("Saindo...");
                         scanner.close();
-                        return; // Encerra o programa
+                        return;
+                    case 7:
+                        // Chama o método para realizar o agendamento
+                        agendamento.agendar(scanner);
+                        break;
+                    case 8:
+                        visualizarAgendamentos.listarAgendamentos();
+                        break;
+                    case 9:
+                        // Novo case para realizar a venda NF-e
+                        vendaNFE.realizarVenda();
+                        break;
+                        
+                    case 10:
+                        // Novo case para realizar a venda NF-e
+                    	visualizador.exibirVendas();
+                        break;
+                        
                     default:
-                        // Caso a opção seja inválida
-       
                         System.out.println("Opção inválida. Tente novamente.");
                         break;
                 }
