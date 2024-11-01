@@ -6,13 +6,44 @@ import gestao.venda.VendaNFE;
 import gestao.venda.VisualizarVendaNFE;
 import modelo.agendamento.Agendamento;
 import modelo.agendamento.VisualizarAgendamentos;
+import modelo.dominio.dao.usuario.CadastroUsuario;
+import modelo.dominio.dao.usuario.ListarUsuario;
+import modelo.dominio.dao.usuario.UsuarioDAO;
+import gestao.Usuario;
 
 public class Main {
     public static void main(String[] args) {
-        // Cria uma nova conexão ao banco de dados
         Conexao conexao = new ConexaoSQL();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Scanner scanner = new Scanner(System.in);
 
-        // Instancia os objetos de cadastro
+        // Autenticação do usuário antes de exibir o menu principal
+        System.out.println("=== Sistema de Autenticação ===");
+        Usuario usuarioAutenticado = null;
+        CadastroUsuario cadastroUsuario = new CadastroUsuario(scanner);
+
+        // Permitir que novos usuários se cadastrem
+        while (usuarioAutenticado == null) {
+            System.out.print("Nome de usuário (ou digite 'cadastrar' para criar um novo usuário): ");
+            String username = scanner.nextLine();
+            if (username.equalsIgnoreCase("cadastrar")) {
+                cadastroUsuario.coletarDadosUsuario();
+                continue; // Volta para o início do loop para tentar autenticar novamente
+            }
+
+            System.out.print("Senha: ");
+            String senha = scanner.nextLine();
+
+            Usuario usuario = usuarioDAO.buscarUsuarioUser(username);
+            if (usuario != null && usuario.getSenha().equals(senha)) {
+                usuarioAutenticado = usuario;
+                System.out.println("Login bem-sucedido. Bem-vindo, " + usuario.getNome() + "!");
+            } else {
+                System.out.println("Usuário ou senha incorretos. Tente novamente.");
+            }
+        }
+
+        // Instancia dos objetos de cadastro e visualização após a autenticação
         CadastroCliente cadastroCliente = new CadastroCliente(conexao);
         CadastroFornecedor cadastroFornecedor = new CadastroFornecedor(conexao);
         CadastroProduto cadastroProduto = new CadastroProduto(conexao);
@@ -21,16 +52,15 @@ public class Main {
         VisualizarFornecedores visualizarFornecedores = new VisualizarFornecedores(conexao);
         VisualizarAgendamentos visualizarAgendamentos = new VisualizarAgendamentos(conexao);
 
-        Agendamento agendamento = new Agendamento(conexao); // Instancia de Agendamento
-        Scanner scanner = new Scanner(System.in); // Scanner criado aqui
-
-        VendaNFE vendaNFE = new VendaNFE(conexao, scanner); // Passando o Scanner para VendaNFE
+        Agendamento agendamento = new Agendamento(conexao);
+        VendaNFE vendaNFE = new VendaNFE(conexao, scanner);
         VisualizarVendaNFE visualizador = new VisualizarVendaNFE(conexao);
         
-        
+        ListarUsuario listarUsuario = new ListarUsuario(scanner);
+
+        // Menu principal do sistema
         while (true) {
             try {
-                // Exibe o menu principal
                 System.out.println("Escolha uma opção:");
                 System.out.println("1. Cadastrar Cliente");
                 System.out.println("2. Cadastrar Fornecedor");
@@ -40,8 +70,10 @@ public class Main {
                 System.out.println("6. Sair");
                 System.out.println("7. Cadastrar Agendamento");
                 System.out.println("8. Visualizar Agendamentos");
-                System.out.println("9. Realizar Venda NF-e"); // Novo menu para venda NF-e
-                System.out.println("10. Mostrar vendas");
+                System.out.println("9. Realizar Venda NF-e");
+                System.out.println("10. Mostrar Vendas");
+                System.out.println("11. Listar Usuários");
+
                 System.out.print("Opção: ");
                 int opcao = scanner.nextInt();
                 scanner.nextLine(); // Consumir a nova linha
@@ -67,22 +99,20 @@ public class Main {
                         scanner.close();
                         return;
                     case 7:
-                        // Chama o método para realizar o agendamento
                         agendamento.agendar(scanner);
                         break;
                     case 8:
                         visualizarAgendamentos.listarAgendamentos();
                         break;
                     case 9:
-                        // Novo case para realizar a venda NF-e
                         vendaNFE.realizarVenda();
                         break;
-                        
                     case 10:
-                        // Novo case para realizar a venda NF-e
-                    	visualizador.exibirVendas();
+                        visualizador.exibirVendas();
                         break;
-                        
+                    case 11:
+                        listarUsuario.listarTodosUsuarios();
+                        break;
                     default:
                         System.out.println("Opção inválida. Tente novamente.");
                         break;
