@@ -12,7 +12,7 @@ public class Agendamento {
     private String nomeCliente;
     private int idCarro;
     private int situacao; // Atribuir tipo apropriado, como int para representar estados
-    private String sintoma;
+    private String observacao;
 
     public Agendamento(int id, int idCliente, LocalDateTime dataAtendimento, String modelo, String marca, String nomeCliente, int idCarro, int situacao, String sintoma) {
         this.id = id;
@@ -23,7 +23,7 @@ public class Agendamento {
         this.nomeCliente = nomeCliente;
         this.idCarro = idCarro;
         this.situacao = situacao;
-        this.sintoma = sintoma;
+        this.setObservacao(sintoma);
     }
     public Agendamento() {
 		this.situacao = 0;
@@ -98,11 +98,11 @@ public class Agendamento {
         this.situacao = situacao;
     }
 
-    public String getSintoma() {
-        return sintoma;
-    }
-
-    public void setSintoma(String sintoma) {
-        this.sintoma = sintoma;
-    }
+   
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 }

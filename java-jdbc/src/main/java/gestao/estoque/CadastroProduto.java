@@ -16,39 +16,53 @@ public class CadastroProduto {
         this.scanner = new Scanner(System.in);
     }
 
+    private String solicitarEntrada(String mensagem) {
+        System.out.print(mensagem + " (ou digite 'voltar' para retornar): ");
+        String entrada = scanner.nextLine();
+        if ("voltar".equalsIgnoreCase(entrada)) {
+            System.out.println("Operação cancelada pelo usuário. Retornando ao menu principal...");
+            return null;
+        }
+        return entrada;
+    }
+
     public void coletarDadosProduto() {
         // Coletar código do produto
-        System.out.print("Digite o código: ");
-        String produtoInput = scanner.nextLine();
+        String produtoInput = solicitarEntrada("Digite o código:");
+        if (produtoInput == null) return;
         if (produtoInput.length() <= 3) {
             System.out.println("Código inválido, digite um código maior que 3.");
             return;
         }
-        long codigo = Long.parseLong(produtoInput); // Convertendo o código para long
+        long codigo = Long.parseLong(produtoInput);
 
         // Nome do produto
-        System.out.print("Digite o nome do produto: ");
-        String produtoNome = scanner.nextLine();
+        String produtoNome = solicitarEntrada("Digite o nome do produto:");
+        if (produtoNome == null) return;
 
         // Quantidade
-        System.out.print("Digite a quantidade: ");
-        long quantidade = Long.parseLong(scanner.nextLine()); // Mantendo como long
+        String quantidadeStr = solicitarEntrada("Digite a quantidade:");
+        if (quantidadeStr == null) return;
+        long quantidade = Long.parseLong(quantidadeStr);
 
         // Preço de custo
-        System.out.print("Preço de custo: ");
-        float prcCusto = Float.parseFloat(scanner.nextLine()); // Convertendo para float
+        String prcCustoStr = solicitarEntrada("Preço de custo:");
+        if (prcCustoStr == null) return;
+        float prcCusto = Float.parseFloat(prcCustoStr);
 
         // Preço de venda
-        System.out.print("Preço de venda: ");
-        float prcVenda = Float.parseFloat(scanner.nextLine());
+        String prcVendaStr = solicitarEntrada("Preço de venda:");
+        if (prcVendaStr == null) return;
+        float prcVenda = Float.parseFloat(prcVendaStr);
 
         // Embalagem
-        System.out.print("Qual modelo de embalagem: ");
-        String embalagem = scanner.nextLine();
+        String embalagem = solicitarEntrada("Qual modelo de embalagem:");
+        if (embalagem == null) return;
 
         // Produto ou serviço
-        System.out.print("Digite 'P' para produto ou 'S' para serviço: ");
-        String prodser = scanner.nextLine().toUpperCase();
+        String prodser = solicitarEntrada("Digite 'P' para produto ou 'S' para serviço:");
+        if (prodser == null) return;
+        prodser = prodser.toUpperCase();
 
         // Criar o objeto Produto com data e estado
         Produto produto = new Produto(codigo, produtoNome, quantidade, prcCusto, prcVenda, embalagem, LocalDateTime.now(), prodser);
