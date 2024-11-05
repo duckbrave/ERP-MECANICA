@@ -26,9 +26,10 @@ public class VisualizarClientes {
                 String rua = rs.getString("rua");
                 String bairro = rs.getString("bairro");
                 String cidade = rs.getString("cidade");
-
+                String id = rs.getString("Id");
+                
                 System.out.println("----------------------------");
-                System.out.println("CPF/CNPJ: " + cnpj + ", Telefone: " + telefone + ", Nome: " + nome + ", Email: " + email);
+                System.out.println("Id: " + id + ", CPF/CNPJ: " + cnpj + ", Telefone: " + telefone + ", Nome: " + nome + ", Email: " + email);
                 System.out.println("Endereço: " + rua + ", " + bairro + ", " + cidade);
                 System.out.println("----------------------------");
             }
