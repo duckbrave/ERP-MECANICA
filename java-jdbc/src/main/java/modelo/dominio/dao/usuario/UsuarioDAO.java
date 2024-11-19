@@ -117,12 +117,12 @@ public class UsuarioDAO {
         return null;
     }
 
-    public Usuario buscarUsuarioUser(String usuario) {
+    public Usuario buscarUsuarioUser(String username) {
         String sql = "SELECT * FROM usuario WHERE usuario = ?";
         try (Connection conn = conexao.obterConexao();
              PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, usuario);
+            preparedStatement.setString(1, username);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return getUsuario(resultSet);
@@ -132,6 +132,24 @@ public class UsuarioDAO {
             System.out.println("Erro ao buscar usuário por nome de usuário: " + e.getMessage());
         }
         return null;
+    }
+
+    // Novo método para verificar o perfil do usuário
+    public String obterPerfil(String username) {
+        String sql = "SELECT perfil FROM usuario WHERE usuario = ?";
+        try (Connection conn = conexao.obterConexao();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("perfil"); // Retorna o perfil do usuário
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao obter perfil do usuário: " + e.getMessage());
+        }
+        return null; // Retorna null se não encontrar o perfil
     }
 
     private Usuario getUsuario(ResultSet result) throws SQLException {
