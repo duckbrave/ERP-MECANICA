@@ -1,0 +1,23 @@
+CREATE tABLE cliente (
+    id SERIAL PRIMARY KEY,
+    cpf VARCHAR(11) NOT NULL,
+    telefone VARCHAR(15),
+    nome VARCHAR(100),
+    email VARCHAR(100),
+    rua VARCHAR(100),
+    bairro VARCHAR(100),
+    cidade VARCHAR(100)
+);
+
+select * from cliente
+
+ALTER TABLE cliente 
+ALTER COLUMN telefone TYPE VARCHAR(15);
+
+ALTER TABLE cliente 
+ADD COLUMN cnpj VARCHAR(20),
+ADD COLUMN razao_social VARCHAR(60),
+ADD COLUMN ie_cli BIGINT,
+ADD COLUMN representante VARCHAR(50),
+ADD COLUMN estado INT,
+ADD COLUMN for_cli_trans INT;

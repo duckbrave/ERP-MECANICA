@@ -1,0 +1,28 @@
+CREATE TABLE venda_nfe (
+    id SERIAL PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    cnpj VARCHAR(20),
+    telefone VARCHAR(15),
+    nome_cliente VARCHAR(100),
+    nome_veiculo VARCHAR(100),
+    marca_veiculo VARCHAR(50),
+    forma_pagamento VARCHAR(50),
+    cod_prod VARCHAR(20),
+    peca VARCHAR(100),
+    valor NUMERIC(10, 2),
+    defeito TEXT,
+    data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id) ON DELETE CASCADE
+);
+
+ALTER TABLE agendamento ADD COLUMN defeito TEXT;
+
+alter table venda_nfe
+drop column cod_prod;
+
+
+alter table venda_nfe 
+add column  cod_peca varchar;
+
+alter table venda_nfe 
+add column quantidade int;

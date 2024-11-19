@@ -1,0 +1,12 @@
+CREATE TABLE estoque (
+    id_prod SERIAL PRIMARY KEY,
+    codigo_pro VARCHAR(50) NOT NULL,
+    nome_pro VARCHAR(30) NOT NULL,
+    quant_pro INT NOT NULL,
+    estado VARCHAR(10) NOT NULL,
+    prc_custo DECIMAL(10, 2) NOT NULL,
+    pre_venda DECIMAL(10, 2) NOT NULL,
+    tipo_emba VARCHAR(5) NOT NULL,
+    data_cad TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    prod_ser CHAR(1) NOT NULL
+);

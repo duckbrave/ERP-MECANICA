@@ -1,0 +1,14 @@
+CREATE TABLE permissao (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL UNIQUE,
+    descricao VARCHAR(50)
+);
+
+CREATE TABLE usuario_permissao (
+    permissao_id BIGINT NOT NULL,    
+    usuario_id BIGINT NOT NULL,
+    PRIMARY KEY (permissao_id, usuario_id),
+    CONSTRAINT FK_usuario_permissao_permissao_id FOREIGN KEY (permissao_id) REFERENCES permissao(id),
+    CONSTRAINT FK_usuario_permissao_usuario_id FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+

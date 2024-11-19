@@ -1,0 +1,28 @@
+
+
+CREATE TABLE venda (
+    id BIGSERIAL PRIMARY KEY,
+    total_venda DECIMAL(10,2) NOT NULL,
+    valor_pago DECIMAL(10,2) NOT NULL,
+    desconto DECIMAL(10,2) NOT NULL,
+    troco DECIMAL(10,2) NOT NULL,
+    cliente_id BIGINT NOT NULL,
+    usuario_id BIGINT NOT NULL,
+    data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    data_altera TIMESTAMP,
+    CONSTRAINT FK_venda_cliente_id FOREIGN KEY (cliente_id) REFERENCES cliente(id),
+    CONSTRAINT FK_venda_usuario_id FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+
+CREATE TABLE venda_item (
+    venda_id BIGINT NOT NULL,
+    produto_id BIGINT NOT NULL,
+    quantidade INT NOT NULL,
+    desconto DECIMAL(10,2) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (venda_id, produto_id),
+    CONSTRAINT FK_venda_item_venda_id FOREIGN KEY (venda_id) REFERENCES venda(id),
+    CONSTRAINT FK_venda_item_produto_id FOREIGN KEY (produto_id) REFERENCES estoque(id_prod)
+);

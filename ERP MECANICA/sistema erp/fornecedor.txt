@@ -1,0 +1,24 @@
+CREATE TABLE fornecedor (
+    id SERIAL PRIMARY KEY,          -- Identificador único do fornecedor
+    cnpj VARCHAR(14) NOT NULL,     -- CNPJ do fornecedor (14 caracteres)
+    nome VARCHAR(100) NOT NULL,     -- Nome do fornecedor
+    telefone VARCHAR(15),           -- Telefone do fornecedor
+    email VARCHAR(100),             -- Email do fornecedor
+    endereco VARCHAR(255),          -- Endereço do fornecedor
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Data de cadastro do fornecedor
+);
+
+ALTER TABLE fornecedor
+ADD COLUMN razao_social VARCHAR(60) NOT null;
+
+alter table fornecedor 
+add column ie_for bigint;
+
+alter table fornecedor 
+add column representante varchar(50);
+
+select * from fornecedor
+
+alter table fornecedor 
+add column bairro varchar(20),
+add column cidade varchar (60);
